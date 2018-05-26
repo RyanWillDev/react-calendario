@@ -1,0 +1,30 @@
+{
+  "name": "@ryanwilldev/react-calendario",
+  "version": "1.0.0",
+  "description": "A flexible and accessible React component for creating calendars and date pickers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyanWillDev/react-calendario.git"
+  },
+  "keywords": [
+    "react",
+    "calendar",
+    "date",
+    "picker",
+    "accessibility"
+  ],
+  "author": "Ryan Will https://www.ryanwilldev.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RyanWillDev/react-calendario/issues"
+  },
+  "homepage": "https://github.com/RyanWillDev/react-calendario#readme",
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  }
+}
