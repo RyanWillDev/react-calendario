@@ -46,7 +46,7 @@ export const convertDateToCalendario: (d: Date) => CalendarioDate = d => ({
 });
 
 export const isDateObject: (date: CalendarioDate | Date) => boolean = date => {
-  if ((date as Date).getUTCDate && typeof Date === 'object') return true;
+  if ((date as Date).getUTCDate && typeof date === 'object') return true;
   else return false;
 };
 
