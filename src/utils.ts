@@ -28,32 +28,25 @@ const i18nMonths = [
   new Date(2018, 11),
 ];
 
-export function datesToCalendarioDates(
-  initialSelectedDates: Date[] | CalendarioDate[]
-): CalendarioDate[] {
-  if ((initialSelectedDates as CalendarioDate[]).every(isCalendarioDate)) {
-    return initialSelectedDates as CalendarioDate[];
-  } else if ((initialSelectedDates as Date[]).every(isDateObject)) {
-    return (initialSelectedDates as Date[]).map(convertDateToCalendario);
-  } else return [];
-}
-
-export const convertDateToCalendario: (d: Date) => CalendarioDate = d => ({
-  day: d.getDay(),
-  month: d.getMonth(),
-  year: d.getFullYear(),
-  siblingMonth: false,
-});
-
-export const isDateObject: (date: CalendarioDate | Date) => boolean = date => {
-  if ((date as Date).getUTCDate && typeof date === 'object') return true;
+// Helper function for determining if an object is a Date.
+const isDateObject: (
+  date: CalendarioDate | Date | undefined
+) => boolean = date => {
+  if (
+    date !== undefined &&
+    (date as Date).getUTCDate &&
+    typeof date === 'object'
+  )
+    return true;
   else return false;
 };
 
-export const isCalendarioDate: (
-  date: CalendarioDate | Date
+// Helper function for determining if an object is a CalendarioDate
+const isCalendarioDate: (
+  date: CalendarioDate | Date | undefined
 ) => boolean = date => {
   if (
+    date !== undefined &&
     (date as CalendarioDate).day != null &&
     (date as CalendarioDate).month != null &&
     (date as CalendarioDate).year != null &&
@@ -63,24 +56,24 @@ export const isCalendarioDate: (
   else return false;
 };
 
-export const createCalendar: (props: CalendarioProps) => FullCalendar = ({
-  startDate,
-  language,
-}) => {
-  let date = new Date();
-
-  if (startDate == null) {
-    date = new Date();
-  } else if (isCalendarioDate(startDate)) {
-    const { year, month, day } = startDate as CalendarioDate;
-    date = new Date(year, month, day);
-  } else if (isDateObject(startDate)) {
-    date = startDate as Date;
-  }
-
-  return createFullCalendar(date, language);
+/**
+ * Helper function for converting a CalendarioDate to a native Date object.
+ *
+ * @param date
+ */
+export const convertToNativeDate: (date: CalendarioDate) => Date = date => {
+  const { year, month, day } = date as CalendarioDate;
+  return new Date(year, month, day);
 };
 
+/**
+ * Helper function for formatting the calendar returned from calendar-base
+ * into weeks.
+ *
+ * The formatted calendar will be a nested array of CalendarioDates.
+ * Each nested array represents a week of the month.
+ *
+ */
 function calendarInWeeks(cal: CalendarioDate[]): Array<CalendarioDate[]> {
   const numOfWeeks = cal.length / 7 - 1;
   let calendarWithWeeks = [];
@@ -94,6 +87,12 @@ function calendarInWeeks(cal: CalendarioDate[]): Array<CalendarioDate[]> {
   return calendarWithWeeks;
 }
 
+/**
+ * Helper function for injected the Calendar object from calendar base.
+ *
+ * Returns a function used to create and format a calendar based on a given date.
+ *
+ */
 function calendarFactory(
   calendar: Object
 ): (date: Date) => Array<CalendarioDate[]> {
@@ -107,9 +106,36 @@ function calendarFactory(
     );
 }
 
+/**
+ * Creates and formats a calendar based on a given date.
+ */
 const makeCalendar = calendarFactory(
   new Calendar({ siblingMonths: true, weekStart: 0 })
 );
+
+/**
+ *  Creates a formatted calendar from the startDate prop if given else from the
+ *  current date.
+ *
+ *  startDate can be given as a CalendarioDate or a native Date object.
+ */
+export const createCalendar: (props: CalendarioProps) => FullCalendar = ({
+  startDate,
+  language,
+}) => {
+  let date: Date;
+
+  if (isCalendarioDate(startDate)) {
+    const { year, month, day } = startDate as CalendarioDate;
+    date = new Date(year, month, day);
+  } else if (isDateObject(startDate)) {
+    date = startDate as Date;
+  } else {
+    date = new Date();
+  }
+
+  return createFullCalendar(date, language);
+};
 
 function createFullCalendar(
   date: Date,
