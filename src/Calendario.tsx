@@ -1,33 +1,28 @@
 import * as React from 'react';
-import { CalendarioDate, FullCalendar, ChildProps } from './types';
+import {
+  CalendarioDate,
+  FullCalendar,
+  ChildProps,
+  CalendarioProps,
+  CalendarioState,
+} from './types';
 import { datesToCalendarioDates, createCalendar } from './utils';
 
-interface Props {
-  initialSelectedDates?: Date[] | CalendarioDate[];
-  startDate?: Date | CalendarioDate;
-  multiSelect?: boolean;
-  readOnly?: boolean;
-  render?: Function;
-  onDateSelected?: (selectedDates: CalendarioDate[]) => void;
-}
-
-interface State {
-  selectedDates: Array<CalendarioDate>;
-  calendar: FullCalendar;
-}
-
-export default class Calendario extends React.Component<Props, State> {
-  state: State = {
+export default class Calendario extends React.Component<
+  CalendarioProps,
+  CalendarioState
+> {
+  state: CalendarioState = {
     selectedDates: this.props.initialSelectedDates
       ? datesToCalendarioDates(this.props.initialSelectedDates)
       : [],
-    calendar: createCalendar(this.props.startDate),
+    calendar: createCalendar(this.props),
   };
 
   incrementMonth: () => void;
   decrementMonth: () => void;
 
-  constructor(props: Props) {
+  constructor(props: CalendarioProps) {
     super(props);
 
     this.incrementMonth = this.changeMonth.bind(this, 1);
@@ -67,10 +62,12 @@ export default class Calendario extends React.Component<Props, State> {
 
     this.setState({
       calendar: createCalendar({
-        month: currentMonth + num,
-        year,
-        day: 1,
-        siblingMonth: false,
+        startDate: {
+          month: currentMonth + num,
+          year,
+          day: 1,
+          siblingMonth: false,
+        },
       }),
     });
   }

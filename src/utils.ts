@@ -1,5 +1,30 @@
-import { CalendarioDate, FullCalendar } from './types';
+import { CalendarioDate, CalendarioProps, FullCalendar } from './types';
 import { Calendar } from 'calendar-base';
+
+const intlWeekDays = [
+  new Date(2018, 0, 7),
+  new Date(2018, 0, 8),
+  new Date(2018, 0, 9),
+  new Date(2018, 0, 10),
+  new Date(2018, 0, 11),
+  new Date(2018, 0, 12),
+  new Date(2018, 0, 13),
+];
+
+const intlMonths = [
+  new Date(2018, 0),
+  new Date(2018, 1),
+  new Date(2018, 2),
+  new Date(2018, 3),
+  new Date(2018, 4),
+  new Date(2018, 5),
+  new Date(2018, 6),
+  new Date(2018, 7),
+  new Date(2018, 8),
+  new Date(2018, 9),
+  new Date(2018, 10),
+  new Date(2018, 11),
+];
 
 export function datesToCalendarioDates(
   initialSelectedDates: Date[] | CalendarioDate[]
@@ -36,9 +61,10 @@ export const isCalendarioDate: (
   else return false;
 };
 
-export const createCalendar: (
-  startDate: CalendarioDate | Date | undefined
-) => FullCalendar = startDate => {
+export const createCalendar: (props: CalendarioProps) => FullCalendar = ({
+  startDate,
+  language = 'en-US',
+}) => {
   let date = new Date();
 
   if (startDate == null) {
@@ -50,7 +76,7 @@ export const createCalendar: (
     date = startDate as Date;
   }
 
-  return createFullCalendar(date);
+  return createFullCalendar(date, language);
 };
 
 function calendarInWeeks(cal: CalendarioDate[]): Array<CalendarioDate[]> {
@@ -83,12 +109,57 @@ const makeCalendar = calendarFactory(
   new Calendar({ siblingMonths: true, weekStart: 0 })
 );
 
-function createFullCalendar(date: Date): FullCalendar {
+function createFullCalendar(date: Date, language: string): FullCalendar {
   return {
     dates: makeCalendar(date),
     previousMonth: date.getMonth() - 1,
     currentMonth: date.getMonth(),
     nextMonth: date.getMonth() + 1,
     currentYear: date.getFullYear(),
+    i18nDates: intlDates(language),
+  };
+}
+
+function intlDates(language: string) {
+  const langIsSupported =
+    language.length > 0 &&
+    Intl.DateTimeFormat.supportedLocalesOf(language).length > 0;
+
+  const weekDaysShort = intlWeekDays.map(d =>
+    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+      weekday: 'short',
+    }).format(d)
+  );
+
+  const weekDaysNarrow = intlWeekDays.map(d =>
+    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+      weekday: 'narrow',
+    }).format(d)
+  );
+
+  const weekDaysFull = intlWeekDays.map(d =>
+    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+      weekday: 'long',
+    }).format(d)
+  );
+
+  const monthsShort = intlMonths.map(d =>
+    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+      month: 'short',
+    }).format(d)
+  );
+
+  const monthsFull = intlMonths.map(d =>
+    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+      month: 'long',
+    }).format(d)
+  );
+
+  return {
+    monthsFull,
+    monthsShort,
+    weekDaysFull,
+    weekDaysShort,
+    weekDaysNarrow,
   };
 }
