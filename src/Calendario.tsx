@@ -1,21 +1,12 @@
 import * as React from 'react';
-import {
-  CalendarioDate,
-  FullCalendar,
-  ChildProps,
-  CalendarioProps,
-  CalendarioState,
-} from './types';
-import { datesToCalendarioDates, createCalendar } from './utils';
+import { ChildProps, CalendarioProps, CalendarioState } from './types';
+import { createCalendar, convertToNativeDate } from './utils';
 
 export default class Calendario extends React.Component<
   CalendarioProps,
   CalendarioState
 > {
   state: CalendarioState = {
-    selectedDates: this.props.initialSelectedDates
-      ? datesToCalendarioDates(this.props.initialSelectedDates)
-      : [],
     calendar: createCalendar(this.props),
   };
 
@@ -47,6 +38,7 @@ export default class Calendario extends React.Component<
     return {
       incrementMonth: () => this.incrementMonth(),
       decrementMonth: () => this.decrementMonth(),
+      convertToNativeDate: d => convertToNativeDate(d),
       ...this.state.calendar,
       dates: [...this.state.calendar.dates],
     };

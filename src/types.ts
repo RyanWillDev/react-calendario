@@ -1,15 +1,10 @@
 export interface CalendarioProps {
-  initialSelectedDates?: Date[] | CalendarioDate[];
   startDate?: Date | CalendarioDate;
-  multiSelect?: boolean;
-  readOnly?: boolean;
   render?: Function;
   language?: string;
-  onDateSelected?: (selectedDates: CalendarioDate[]) => void;
 }
 
 export interface CalendarioState {
-  selectedDates: Array<CalendarioDate>;
   calendar: FullCalendar;
 }
 
@@ -46,4 +41,5 @@ export interface ChildProps {
   i18nDates: IntlDates;
   incrementMonth: () => void;
   decrementMonth: () => void;
+  convertToNativeDate: (d: CalendarioDate) => Date;
 }
