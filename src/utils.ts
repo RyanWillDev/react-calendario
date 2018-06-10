@@ -145,6 +145,9 @@ export const createCalendar: (props: CalendarioProps) => FullCalendar = ({
   return createFullCalendar(date, language);
 };
 
+/**
+ * Function to create the FullCalendar used by Calendario
+ */
 function createFullCalendar(
   date: Date,
   language: string | undefined
@@ -182,36 +185,41 @@ function createI18nDates(language: string | undefined) {
   const langIsSupported =
     language !== undefined &&
     language.length > 0 &&
+    language.length < 8 && // any string longer than 8 will throw an error in the following check
     Intl.DateTimeFormat.supportedLocalesOf(language).length > 0;
 
-  const weekDaysShort = i18nWeekDays.map(d =>
-    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+  const dateFormatter = formatDate(
+    langIsSupported ? language : navigator.language
+  );
+
+  const weekDaysShort = i18nWeekDays.map(
+    dateFormatter({
       weekday: 'short',
-    }).format(d)
+    })
   );
 
-  const weekDaysNarrow = i18nWeekDays.map(d =>
-    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+  const weekDaysNarrow = i18nWeekDays.map(
+    dateFormatter({
       weekday: 'narrow',
-    }).format(d)
+    })
   );
 
-  const weekDaysFull = i18nWeekDays.map(d =>
-    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+  const weekDaysFull = i18nWeekDays.map(
+    dateFormatter({
       weekday: 'long',
-    }).format(d)
+    })
   );
 
-  const monthsShort = i18nMonths.map(d =>
-    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+  const monthsShort = i18nMonths.map(
+    dateFormatter({
       month: 'short',
-    }).format(d)
+    })
   );
 
-  const monthsFull = i18nMonths.map(d =>
-    new Intl.DateTimeFormat(langIsSupported ? language : navigator.language, {
+  const monthsFull = i18nMonths.map(
+    dateFormatter({
       month: 'long',
-    }).format(d)
+    })
   );
 
   return {
