@@ -41,5 +41,5 @@ export interface ChildProps {
   i18nDates: IntlDates;
   incrementMonth: () => void;
   decrementMonth: () => void;
-  convertToNativeDate: (d: CalendarioDate) => Date;
+  convertToNativeDate: (d: CalendarioDate) => Date | undefined;
 }

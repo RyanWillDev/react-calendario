@@ -61,9 +61,17 @@ const isCalendarioDate: (
  *
  * @param date
  */
-export const convertToNativeDate: (date: CalendarioDate) => Date = date => {
-  const { year, month, day } = date as CalendarioDate;
-  return new Date(year, month, day);
+export const convertToNativeDate: (
+  date: CalendarioDate | any
+) => Date | undefined = date => {
+  if (isCalendarioDate(date)) {
+    const { year, month, day } = date as CalendarioDate;
+    return new Date(year, month, day);
+  } else {
+    console.error(
+      'convertToNativeDate expected a CalendarioDate, but got ' + date
+    );
+  }
 };
 
 /**
@@ -152,6 +160,16 @@ function createFullCalendar(
 }
 
 /**
+ * Helper function for creating a date formatter for i18n dates.
+ *
+ * @param langIsSupported
+ * @param lang
+ */
+function formatDate(lang: string | undefined): (o: {}) => (d: Date) => string {
+  return options => date => new Intl.DateTimeFormat(lang, options).format(date);
+}
+
+/**
  * createI18nDates
  *
  * Create internationalized strings of months and weekdays based on the language
@@ -160,7 +178,6 @@ function createFullCalendar(
  *
  * @param language string | undefined
  */
-
 function createI18nDates(language: string | undefined) {
   const langIsSupported =
     language !== undefined &&
