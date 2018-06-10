@@ -77,13 +77,16 @@ export const convertToNativeDate: (
  *
  */
 function calendarInWeeks(cal: CalendarioDate[]): Array<CalendarioDate[]> {
-  const numOfWeeks = cal.length / 7 - 1;
+  const calWithSiblingMonth = cal.map(
+    d => (d.siblingMonth ? d : { ...d, siblingMonth: false })
+  );
+  const numOfWeeks = calWithSiblingMonth.length / 7 - 1;
   let calendarWithWeeks = [];
 
   for (let currentWeek = 0; currentWeek <= numOfWeeks; currentWeek++) {
     const start = currentWeek == 0 ? 0 : currentWeek * 7;
     const end = start + 7;
-    calendarWithWeeks.push(cal.slice(start, end));
+    calendarWithWeeks.push(calWithSiblingMonth.slice(start, end));
   }
 
   return calendarWithWeeks;
