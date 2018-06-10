@@ -32,28 +32,22 @@ const i18nMonths = [
 const isDateObject: (
   date: CalendarioDate | Date | undefined
 ) => boolean = date => {
-  if (
-    date !== undefined &&
-    (date as Date).getUTCDate &&
-    typeof date === 'object'
-  )
-    return true;
-  else return false;
+  return (
+    date !== undefined && (date as Date).getUTCDate && typeof date === 'object'
+  );
 };
 
 // Helper function for determining if an object is a CalendarioDate
 const isCalendarioDate: (
   date: CalendarioDate | Date | undefined
 ) => boolean = date => {
-  if (
+  return (
     date !== undefined &&
     (date as CalendarioDate).day != null &&
     (date as CalendarioDate).month != null &&
     (date as CalendarioDate).year != null &&
     (date as CalendarioDate).siblingMonth != null
-  )
-    return true;
-  else return false;
+  );
 };
 
 /**
