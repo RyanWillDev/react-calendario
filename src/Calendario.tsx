@@ -46,16 +46,23 @@ export default class Calendario extends React.Component<
 
   changeMonth(num: number) {
     const { currentYear, currentMonth } = this.state.calendar;
-    let year: number;
+    let year: number, month: number;
 
-    if (num === -1 && currentMonth === 0) year = currentYear - 1;
-    else if (num === 1 && currentMonth === 11) year = currentYear + 1;
-    else year = currentYear;
+    if (num === -1 && currentMonth === 0) {
+      year = currentYear - 1;
+      month = 11;
+    } else if (num === 1 && currentMonth === 11) {
+      year = currentYear + 1;
+      month = 0;
+    } else {
+      year = currentYear;
+      month = currentMonth + num;
+    }
 
     this.setState({
       calendar: createCalendar({
         startDate: {
-          month: currentMonth + num,
+          month,
           year,
           day: 1,
           siblingMonth: false,
