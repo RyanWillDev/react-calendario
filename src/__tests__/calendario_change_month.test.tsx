@@ -12,9 +12,9 @@ describe('Calendario changeMonth', () => {
     const { getByTestId } = render(
       createCalendario({
         startDate: new Date(2018, 0),
-        render: ({ i18nDates, currentMonth, incrementMonth }: ChildProps) => (
+        render: ({ i18n, currentMonth, incrementMonth }: ChildProps) => (
           <div>
-            <h1 data-testid="date">{i18nDates.monthsFull[currentMonth]}</h1>
+            <h1 data-testid="date">{i18n.monthsFull[currentMonth]}</h1>
             <button data-testid="btn" onClick={incrementMonth} />
           </div>
         ),
@@ -29,9 +29,9 @@ describe('Calendario changeMonth', () => {
     const { getByTestId } = render(
       createCalendario({
         startDate: new Date(2018, 2),
-        render: ({ i18nDates, currentMonth, decrementMonth }: ChildProps) => (
+        render: ({ i18n, currentMonth, decrementMonth }: ChildProps) => (
           <div>
-            <h1 data-testid="date">{i18nDates.monthsFull[currentMonth]}</h1>
+            <h1 data-testid="date">{i18n.monthsFull[currentMonth]}</h1>
             <button data-testid="btn" onClick={decrementMonth} />
           </div>
         ),
@@ -48,22 +48,26 @@ describe('Calendario changeMonth', () => {
         createCalendario({
           startDate: new Date(2017, 11),
           render: ({
-            i18nDates,
+            i18n,
             currentMonth,
             currentYear,
             incrementMonth,
+            nextMonth,
           }: ChildProps) => (
             <div>
               <h1 data-testid="date">
-                {i18nDates.monthsFull[currentMonth]} {currentYear}
+                {i18n.monthsFull[currentMonth]} {currentYear}
               </h1>
               <div />
-              <button data-testid="btn" onClick={incrementMonth} />
+              <button data-testid="btn" onClick={incrementMonth}>
+                {i18n.monthsFull[nextMonth]}
+              </button>
             </div>
           ),
         })
       );
 
+      expect(getByTestId('btn')).toHaveTextContent('january');
       Simulate.click(getByTestId('btn'));
       expect(getByTestId('date')).toHaveTextContent('january 2018');
     });
@@ -73,22 +77,26 @@ describe('Calendario changeMonth', () => {
         createCalendario({
           startDate: new Date(2018, 0),
           render: ({
-            i18nDates,
+            i18n,
             currentMonth,
             currentYear,
             decrementMonth,
+            previousMonth,
           }: ChildProps) => (
             <div>
               <h1 data-testid="date">
-                {i18nDates.monthsFull[currentMonth]} {currentYear}
+                {i18n.monthsFull[currentMonth]} {currentYear}
               </h1>
               <div />
-              <button data-testid="btn" onClick={decrementMonth} />
+              <button data-testid="btn" onClick={decrementMonth}>
+                {i18n.monthsFull[previousMonth]}
+              </button>
             </div>
           ),
         })
       );
 
+      expect(getByTestId('btn')).toHaveTextContent('december');
       Simulate.click(getByTestId('btn'));
       expect(getByTestId('date')).toHaveTextContent('december 2017');
     });

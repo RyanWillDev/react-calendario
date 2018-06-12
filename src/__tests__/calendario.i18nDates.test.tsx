@@ -51,15 +51,15 @@ const expectedWeekDaysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const expectedWeekDaysNarrow = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
-describe('Calendario i18nDates', () => {
+describe('Calendario i18n', () => {
   it('creates correct monthsFull array', () => {
     let monthsFull;
 
     render(
       createCalendario({
         startDate: new Date(2018, 0),
-        render: ({ i18nDates }: ChildProps) => {
-          monthsFull = i18nDates.monthsFull;
+        render: ({ i18n }: ChildProps) => {
+          monthsFull = i18n.monthsFull;
           return <h1 />;
         },
       })
@@ -73,8 +73,8 @@ describe('Calendario i18nDates', () => {
     render(
       createCalendario({
         startDate: new Date(2018, 0),
-        render: ({ i18nDates }: ChildProps) => {
-          monthsShort = i18nDates.monthsShort;
+        render: ({ i18n }: ChildProps) => {
+          monthsShort = i18n.monthsShort;
           return <h1 />;
         },
       })
@@ -88,8 +88,8 @@ describe('Calendario i18nDates', () => {
     render(
       createCalendario({
         startDate: new Date(2018, 0),
-        render: ({ i18nDates }: ChildProps) => {
-          weekDaysFull = i18nDates.weekDaysFull;
+        render: ({ i18n }: ChildProps) => {
+          weekDaysFull = i18n.weekDaysFull;
           return <h1 />;
         },
       })
@@ -103,8 +103,8 @@ describe('Calendario i18nDates', () => {
     render(
       createCalendario({
         startDate: new Date(2018, 0),
-        render: ({ i18nDates }: ChildProps) => {
-          weekDaysShort = i18nDates.weekDaysShort;
+        render: ({ i18n }: ChildProps) => {
+          weekDaysShort = i18n.weekDaysShort;
           return <h1 />;
         },
       })
@@ -118,8 +118,8 @@ describe('Calendario i18nDates', () => {
     render(
       createCalendario({
         startDate: new Date(2018, 0),
-        render: ({ i18nDates }: ChildProps) => {
-          weekDaysNarrow = i18nDates.weekDaysNarrow;
+        render: ({ i18n }: ChildProps) => {
+          weekDaysNarrow = i18n.weekDaysNarrow;
           return <h1 />;
         },
       })

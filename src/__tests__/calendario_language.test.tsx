@@ -12,8 +12,8 @@ describe('Calendario language prop', () => {
     const { getByTestId } = render(
       createCalendario({
         startDate: new Date(2018, 0),
-        render: ({ i18nDates, currentMonth }: ChildProps) => (
-          <h1 data-testid="date">{i18nDates.monthsFull[currentMonth]}</h1>
+        render: ({ i18n, currentMonth }: ChildProps) => (
+          <h1 data-testid="date">{i18n.monthsFull[currentMonth]}</h1>
         ),
       })
     );
@@ -26,8 +26,8 @@ describe('Calendario language prop', () => {
       createCalendario({
         startDate: new Date(2018, 0),
         language: 'djfkadjfald',
-        render: ({ i18nDates, currentMonth }: ChildProps) => (
-          <h1 data-testid="date">{i18nDates.monthsFull[currentMonth]}</h1>
+        render: ({ i18n, currentMonth }: ChildProps) => (
+          <h1 data-testid="date">{i18n.monthsFull[currentMonth]}</h1>
         ),
       })
     );
@@ -46,8 +46,8 @@ describe('Calendario language prop', () => {
       <Calendario
         language="en"
         startDate={new Date(2018, 0)}
-        render={({ i18nDates, currentMonth }: ChildProps) => (
-          <h1 data-testid="date">{i18nDates.monthsFull[currentMonth]}</h1>
+        render={({ i18n, currentMonth }: ChildProps) => (
+          <h1 data-testid="date">{i18n.monthsFull[currentMonth]}</h1>
         )}
       />
     );
