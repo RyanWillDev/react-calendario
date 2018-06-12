@@ -52,6 +52,10 @@ This module is distributed via [npm](https://www.npmjs.com/) which is bundled wi
 
 ## Usage
 
+### Live Examples
+
+[Basic usage](https://codesandbox.io/s/q891p6nlmj)
+
 ## Types
 
 ### CalendarioDate
