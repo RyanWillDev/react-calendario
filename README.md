@@ -52,6 +52,59 @@ This module is distributed via [npm](https://www.npmjs.com/) which is bundled wi
 
 ## Usage
 
+```javascript
+<Calendario startDate={new Date(1990, 1)} language="es">
+  {({
+    dates,
+    i18n,
+    currentMonth,
+    incrementMonth,
+    decrementMonth,
+    nextMonth,
+    previousMonth,
+    currentYear,
+  }) => (
+    <div>
+      <h1>{i18n.monthsFull[currentMonth] + ' ' + currentYear}</h1>
+      <div
+        style={{
+          marginBottom: '1rem',
+          display: 'flex',
+          justifyContent: 'space-around',
+        }}
+      >
+        <button onClick={decrementMonth}>
+          {'< ' + i18n.monthsFull[previousMonth]}
+        </button>
+        <button onClick={incrementMonth}>
+          {i18n.monthsFull[nextMonth] + ' >'}
+        </button>
+      </div>
+      <div
+        style={{
+          marginBottom: '.5rem',
+          display: 'flex',
+          justifyContent: 'space-around',
+        }}
+      >
+        {i18n.weekDaysShort.map(d => <span>{d}</span>)}
+      </div>
+      {dates.map(w => (
+        <div
+          style={{
+            marginBottom: '.5rem',
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+          {w.map(d => <span>{d.day}</span>)}
+        </div>
+      ))}
+    </div>
+  )}
+</Calendario>
+```
+
 ### Live Examples
 
 [Basic usage](https://codesandbox.io/s/q891p6nlmj)
