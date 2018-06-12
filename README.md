@@ -54,7 +54,7 @@ This module is distributed via [npm](https://www.npmjs.com/) which is bundled wi
 
 ## Types
 
-## CalendarioDate
+### CalendarioDate
 
 ```
 interface CalendarioDate {
@@ -68,7 +68,7 @@ interface CalendarioDate {
 Represents a date in the calendar used by the component.
 The `siblingMonth` prop is `true` when a day in the first or last week of the month falls in a the previous or next month.
 
-## i18n
+### i18n
 
 ```
 interface i18n {
@@ -83,7 +83,7 @@ interface i18n {
 i18n is a abbreviation for internationalization.
 This is passed to the child of Calendario to display internationalized month and weekday names.
 
-## FullCalendar
+### FullCalendar
 
 ```
 interface FullCalendar {
@@ -104,19 +104,19 @@ The full reprensentation of the calendar for the current month.
 
 The props passed to the Calendario component. All component props are optional.
 
-## startDate
+### startDate
 
 > `CalendarioDate` | `Date` | defaults to `undefined`
 
 The date to create the month from. The created calendar wil include all the days in the month that the `startDate` falls in.
 
-## render
+### render
 
 > `Function` | defaults to `undefined`
 
 A function that returns JSX for Calendario to render.
 
-## language
+### language
 
 > `string` | defaults to `undefined`
 
@@ -127,33 +127,33 @@ If no `language` prop is passed the browser's current language will be used.
 
 The props passed to the [renderProp](https://reactjs.org/docs/render-props.html) that is given to Calendario either as a prop named `render` or as a child funciton to the `Calendario` component.
 
-## previousMonth
+### previousMonth
 
 > `number`
 
 A zero indexed number for the month previous to the current month.
 
-## currentMonth
+### currentMonth
 
 > `number`
 
 A zero indexed number for the current month.
 
-## previousMonth
+### previousMonth
 
 > `number`
 
 A zero indexed number for the month after the current month.
 
-## currentYear
+### currentYear
 
 > `number`
 
 The current year for the calendar.
 
-## dates
+### dates
 
-> `Array<Array<CalendarioDate>>
+> `Array<CalendarioDate[]>
 
 A nested array of `CalendarioDate`.
 Each inner array represents one week of the current month.
@@ -167,7 +167,7 @@ Each inner array represents one week of the current month.
 ]
 ```
 
-## i18n
+### i18n
 
 ```
 {
@@ -183,19 +183,19 @@ i18n is a abbreviation for internationalization.
 This object contains arrays of internationalized weekday and month names than can
 be used to display the months and weekdays in any language supported by the browser.
 
-## incrementMonth
+### incrementMonth
 
 > `() => void`
 
 This function should be placed on any button in your template that need to increment the current month by one.
 
-## decrementMonth
+### decrementMonth
 
 > `() => void`
 
 This function should be placed on any button in your template that need to decrement the current month by one.
 
-## convertToNativeDate
+### convertToNativeDate
 
 > `(d: CalendarioDate) => Date | undefined`
 
@@ -204,7 +204,7 @@ If `convertToNativeDate` is not given a `CalendarioDate` to convert it will retu
 
 ## Inspiration
 
-The idea for using the render prop pattern to provide a flexible primitive component was inspired by [downshift](https://github.com/paypal/downshift)
+The idea for using the render prop pattern to provide a flexible primitive component was inspired by [downshift](https://github.com/paypal/downshift).
 
 ## Other Solutions
 
