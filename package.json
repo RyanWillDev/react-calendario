@@ -1,7 +1,7 @@
 {
   "name": "@ryanwilldev/react-calendario",
   "version": "1.0.0",
-  "description": "A flexible React component for creating internationalized calendars and date pickers",
+  "description": "A flexible and customizable primitive React component for creating internationalized calendars and date pickers",
   "main": "dist/Calendario.js",
   "types": "dist/Calendario.d.ts",
   "scripts": {
