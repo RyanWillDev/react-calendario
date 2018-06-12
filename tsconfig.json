@@ -2,7 +2,6 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "jsx": "react",
-    "module": "umd",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "pretty": true,

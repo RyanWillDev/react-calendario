@@ -15,7 +15,7 @@ export interface CalendarioDate {
   siblingMonth: boolean;
 }
 
-export interface IntlDates {
+export interface i18n {
   weekDaysFull: String[];
   weekDaysShort: String[];
   weekDaysNarrow: String[];
@@ -29,7 +29,7 @@ export interface FullCalendar {
   currentMonth: number;
   nextMonth: number;
   currentYear: number;
-  i18nDates: IntlDates;
+  i18n: i18n;
 }
 
 export interface ChildProps {
@@ -38,7 +38,7 @@ export interface ChildProps {
   nextMonth: number;
   currentYear: number;
   dates: Array<CalendarioDate[]>;
-  i18nDates: IntlDates;
+  i18n: i18n;
   incrementMonth: () => void;
   decrementMonth: () => void;
   convertToNativeDate: (d: CalendarioDate) => Date | undefined;

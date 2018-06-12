@@ -155,7 +155,7 @@ function createFullCalendar(
     currentMonth: date.getMonth(),
     nextMonth: date.getMonth() + 1,
     currentYear: date.getFullYear(),
-    i18nDates: createI18nDates(language),
+    i18n: createI18nDates(language),
   };
 }
 
