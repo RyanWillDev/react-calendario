@@ -151,9 +151,9 @@ function createFullCalendar(
 ): FullCalendar {
   return {
     dates: makeCalendar(date),
-    previousMonth: date.getMonth() - 1,
+    previousMonth: date.getMonth() > 0 ? date.getMonth() - 1 : 11,
     currentMonth: date.getMonth(),
-    nextMonth: date.getMonth() + 1,
+    nextMonth: date.getMonth() < 11 ? date.getMonth() + 1 : 0,
     currentYear: date.getFullYear(),
     i18n: createI18nDates(language),
   };
