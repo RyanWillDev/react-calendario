@@ -2,8 +2,8 @@
   "name": "@ryanwilldev/react-calendario",
   "version": "1.0.0",
   "description": "A flexible and customizable primitive React component for creating internationalized calendars and date pickers",
-  "main": "dist/Calendario.js",
-  "types": "dist/Calendario.d.ts",
+  "main": "dist/react-calendario.js",
+  "types": "dist/react-calendario.d.ts",
   "scripts": {
     "build": "npm run clean:all && mkdir ./dist && npm run compile && npm run bundle && npm run clean:compiled",
     "bundle": "node ./build-bundle.js",
@@ -48,5 +48,8 @@
   },
   "dependencies": {
     "calendar-base": "^0.3.0"
-  }
+  },
+  "files": [
+    "dist/"
+  ]
 }
