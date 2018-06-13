@@ -5,10 +5,15 @@
   "main": "dist/Calendario.js",
   "types": "dist/Calendario.d.ts",
   "scripts": {
-    "watch": "tsc --watch",
-    "build": "tsc",
+    "build": "npm run clean:all && mkdir ./dist && npm run compile && npm run bundle && npm run clean:compiled",
+    "bundle": "node ./build-bundle.js",
+    "compile": "tsc",
+    "clean:all": "rimraf ./dist && rimraf ./compiled",
+    "clean:compiled": "rimraf ./compiled",
     "test": "jest",
-    "test:continuous": "jest --watch"
+    "test:continuous": "jest --watch",
+    "uglify": "uglify-js ./dist/index.js",
+    "watch": "tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -36,6 +41,8 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-testing-library": "^3.1.4",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.60.2",
     "ts-jest": "^22.4.6",
     "typescript": "^2.8.3"
   },
