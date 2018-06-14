@@ -1,7 +1,8 @@
 export interface CalendarioProps {
   startDate?: Date | CalendarioDate;
-  render?: Function;
+  render?: ChildFunction;
   language?: string;
+  children?: ChildFunction;
 }
 
 export interface CalendarioState {
@@ -43,3 +44,5 @@ export interface ChildProps {
   decrementMonth: () => void;
   convertToNativeDate: (d: CalendarioDate) => Date | undefined;
 }
+
+export type ChildFunction = (props: ChildProps) => React.ReactNode;
