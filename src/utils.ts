@@ -175,7 +175,23 @@ function createFullCalendar(date: Date, props: CalendarioProps): FullCalendar {
  * @param lang
  */
 function formatDate(lang: string | undefined): (o: {}) => (d: Date) => string {
-  return options => date => new Intl.DateTimeFormat(lang, options).format(date);
+  const langIsSupported =
+    lang !== undefined &&
+    lang.length > 0 &&
+    lang.length < 8 && // any string longer than 8 will throw an error in the following check
+    Intl.DateTimeFormat.supportedLocalesOf(lang).length > 0;
+
+  !langIsSupported &&
+    lang !== undefined &&
+    console.error(
+      `Provided language ${lang} is not supported. Using browser's language.`
+    );
+
+  return options => date =>
+    new Intl.DateTimeFormat(
+      langIsSupported ? lang : navigator.language,
+      options
+    ).format(date);
 }
 
 /**
@@ -188,15 +204,7 @@ function formatDate(lang: string | undefined): (o: {}) => (d: Date) => string {
  * @param language string | undefined
  */
 function createI18nDates(language: string | undefined) {
-  const langIsSupported =
-    language !== undefined &&
-    language.length > 0 &&
-    language.length < 8 && // any string longer than 8 will throw an error in the following check
-    Intl.DateTimeFormat.supportedLocalesOf(language).length > 0;
-
-  const dateFormatter = formatDate(
-    langIsSupported ? language : navigator.language
-  );
+  const dateFormatter = formatDate(language);
 
   const weekDaysShort = i18nWeekDays.map(
     dateFormatter({
