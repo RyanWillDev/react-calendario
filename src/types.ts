@@ -13,6 +13,7 @@ export interface CalendarioDate {
   day: number;
   month: number;
   siblingMonth: boolean;
+  value: string;
   year: number;
 }
 
