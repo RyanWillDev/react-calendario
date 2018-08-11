@@ -10,14 +10,14 @@ export default class Calendario extends React.Component<
     calendar: createCalendar(this.props),
   };
 
-  incrementMonth: () => void;
   decrementMonth: () => void;
+  incrementMonth: () => void;
 
   constructor(props: CalendarioProps) {
     super(props);
 
-    this.incrementMonth = this.changeMonth.bind(this, 1);
     this.decrementMonth = this.changeMonth.bind(this, -1);
+    this.incrementMonth = this.changeMonth.bind(this, 1);
   }
 
   render() {
@@ -36,11 +36,11 @@ export default class Calendario extends React.Component<
 
   createChildProps(): ChildProps {
     return {
-      incrementMonth: () => this.incrementMonth(),
-      decrementMonth: () => this.decrementMonth(),
-      convertToNativeDate: d => convertToNativeDate(d),
       ...this.state.calendar,
+      convertToNativeDate: d => convertToNativeDate(d),
       dates: [...this.state.calendar.dates],
+      decrementMonth: () => this.decrementMonth(),
+      incrementMonth: () => this.incrementMonth(),
     };
   }
 
@@ -61,13 +61,13 @@ export default class Calendario extends React.Component<
 
     this.setState({
       calendar: createCalendar({
+        ...this.props,
         startDate: {
-          month,
-          year,
           day: 1,
+          month,
           siblingMonth: false,
+          year,
         },
-        language: this.props.language,
       }),
     });
   }
