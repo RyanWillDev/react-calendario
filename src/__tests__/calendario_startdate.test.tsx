@@ -11,7 +11,13 @@ describe('Calendario startDate prop', () => {
   it('creates a calendar from CalendarioDate if provided as startDate prop', () => {
     const { getByTestId } = render(
       createCalendario({
-        startDate: { year: 2018, month: 0, day: 1, siblingMonth: false },
+        startDate: {
+          year: 2018,
+          month: 0,
+          day: 1,
+          value: '',
+          siblingMonth: false,
+        },
         render: ({ currentYear, currentMonth }: ChildProps) => (
           <div>
             <span data-testid="currentYear">Current year: {currentYear}</span>

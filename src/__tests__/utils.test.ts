@@ -6,6 +6,7 @@ describe('convertToNativeDate', () => {
       day: 1,
       month: 0,
       year: 2018,
+      value: '',
       siblingMonth: false,
     };
 

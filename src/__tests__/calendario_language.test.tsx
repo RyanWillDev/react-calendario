@@ -5,9 +5,16 @@ import 'jest-dom/extend-expect';
 import Calendario from '../Calendario';
 import { ChildProps, CalendarioProps } from '../types';
 
+const err = console.error;
+console.error = jest.fn();
+
 const createCalendario = (props: CalendarioProps) => <Calendario {...props} />;
 
 describe('Calendario language prop', () => {
+  afterAll(() => {
+    console.error = err;
+  });
+
   it('defaults to the browser language if language prop is not provided', () => {
     const { getByTestId } = render(
       createCalendario({
@@ -52,7 +59,7 @@ describe('Calendario language prop', () => {
       />
     );
 
-    // Since the language was over written and then en was passed as the language prop
+    // Since the language was over written and then was passed as the language prop
     // getting january means that it used the prop, otherwise it returns something like M01
     expect(getByTestId('date')).toHaveTextContent('january');
   });
