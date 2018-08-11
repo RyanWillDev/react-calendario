@@ -1,8 +1,8 @@
 export interface CalendarioProps {
-  startDate?: Date | CalendarioDate;
-  render?: ChildFunction;
-  language?: string;
   children?: ChildFunction;
+  language?: string;
+  render?: ChildFunction;
+  startDate?: Date | CalendarioDate;
 }
 
 export interface CalendarioState {
@@ -12,37 +12,37 @@ export interface CalendarioState {
 export interface CalendarioDate {
   day: number;
   month: number;
-  year: number;
   siblingMonth: boolean;
+  year: number;
 }
 
 export interface i18n {
-  weekDaysFull: String[];
-  weekDaysShort: String[];
-  weekDaysNarrow: String[];
-  monthsFull: String[];
-  monthsShort: String[];
+  monthsFull: string[];
+  monthsShort: string[];
+  weekDaysFull: string[];
+  weekDaysNarrow: string[];
+  weekDaysShort: string[];
 }
 
 export interface FullCalendar {
-  dates: Array<CalendarioDate[]>;
-  previousMonth: number;
   currentMonth: number;
-  nextMonth: number;
   currentYear: number;
+  dates: Array<CalendarioDate[]>;
   i18n: i18n;
+  nextMonth: number;
+  previousMonth: number;
 }
 
 export interface ChildProps {
-  previousMonth: number;
+  convertToNativeDate: (d: CalendarioDate) => Date | undefined;
   currentMonth: number;
-  nextMonth: number;
   currentYear: number;
   dates: Array<CalendarioDate[]>;
+  decrementMonth: () => void;
   i18n: i18n;
   incrementMonth: () => void;
-  decrementMonth: () => void;
-  convertToNativeDate: (d: CalendarioDate) => Date | undefined;
+  nextMonth: number;
+  previousMonth: number;
 }
 
 export type ChildFunction = (props: ChildProps) => React.ReactNode;
