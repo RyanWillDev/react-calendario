@@ -46,7 +46,8 @@ const isCalendarioDate: (
     (date as CalendarioDate).day != null &&
     (date as CalendarioDate).month != null &&
     (date as CalendarioDate).year != null &&
-    (date as CalendarioDate).siblingMonth != null
+    (date as CalendarioDate).siblingMonth != null &&
+    (date as CalendarioDate).value != null
   );
 };
 
@@ -76,17 +77,26 @@ export const convertToNativeDate: (
  * Each nested array represents a week of the month.
  *
  */
-function calendarInWeeks(cal: CalendarioDate[]): Array<CalendarioDate[]> {
-  const calWithSiblingMonth = cal.map(
-    d => (d.siblingMonth ? d : { ...d, siblingMonth: false })
-  );
-  const numOfWeeks = calWithSiblingMonth.length / 7 - 1;
+function calendarInWeeks(
+  cal: CalendarioDate[],
+  language: string | undefined
+): Array<CalendarioDate[]> {
+  const dateFormatter = formatDate(language)({ day: 'numeric' });
+
+  const completeCalendar = cal
+    .map(d => (d.siblingMonth ? d : { ...d, siblingMonth: false }))
+    .map(d => ({
+      ...d,
+      value: dateFormatter(new Date(d.year, d.month, d.day)),
+    }));
+
+  const numOfWeeks = completeCalendar.length / 7 - 1;
   let calendarWithWeeks = [];
 
   for (let currentWeek = 0; currentWeek <= numOfWeeks; currentWeek++) {
     const start = currentWeek == 0 ? 0 : currentWeek * 7;
     const end = start + 7;
-    calendarWithWeeks.push(calWithSiblingMonth.slice(start, end));
+    calendarWithWeeks.push(completeCalendar.slice(start, end));
   }
 
   return calendarWithWeeks;
@@ -100,14 +110,15 @@ function calendarInWeeks(cal: CalendarioDate[]): Array<CalendarioDate[]> {
  */
 function calendarFactory(
   calendar: Object
-): (date: Date) => Array<CalendarioDate[]> {
-  return date =>
+): (date: Date, props: CalendarioProps) => Array<CalendarioDate[]> {
+  return (date, { language }) =>
     calendarInWeeks(
       (calendar as any).getCalendar(
         date.getFullYear(),
         date.getMonth(),
         date.getDay()
-      )
+      ),
+      language
     );
 }
 
@@ -124,11 +135,11 @@ const makeCalendar = calendarFactory(
  *
  *  startDate can be given as a CalendarioDate or a native Date object.
  */
-export const createCalendar: (props: CalendarioProps) => FullCalendar = ({
-  startDate,
-  language,
-}) => {
+export const createCalendar: (
+  props: CalendarioProps
+) => FullCalendar = props => {
   let date: Date;
+  const { startDate } = props;
 
   if (isCalendarioDate(startDate)) {
     const { year, month, day } = startDate as CalendarioDate;
@@ -139,18 +150,16 @@ export const createCalendar: (props: CalendarioProps) => FullCalendar = ({
     date = new Date();
   }
 
-  return createFullCalendar(date, language);
+  return createFullCalendar(date, props);
 };
 
 /**
  * Function to create the FullCalendar used by Calendario
  */
-function createFullCalendar(
-  date: Date,
-  language: string | undefined
-): FullCalendar {
+function createFullCalendar(date: Date, props: CalendarioProps): FullCalendar {
+  const { language } = props;
   return {
-    dates: makeCalendar(date),
+    dates: makeCalendar(date, props),
     previousMonth: date.getMonth() > 0 ? date.getMonth() - 1 : 11,
     currentMonth: date.getMonth(),
     nextMonth: date.getMonth() < 11 ? date.getMonth() + 1 : 0,

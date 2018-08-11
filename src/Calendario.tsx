@@ -66,6 +66,7 @@ export default class Calendario extends React.Component<
           day: 1,
           month,
           siblingMonth: false,
+          value: '',
           year,
         },
       }),
