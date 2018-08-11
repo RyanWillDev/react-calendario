@@ -87,7 +87,9 @@ This module is distributed via [npm](https://www.npmjs.com/) which is bundled wi
           justifyContent: 'space-around',
         }}
       >
-        {i18n.weekDaysShort.map(d => <span>{d}</span>)}
+        {i18n.weekDaysShort.map(d => (
+          <span>{d}</span>
+        ))}
       </div>
       {dates.map(w => (
         <div
@@ -97,7 +99,9 @@ This module is distributed via [npm](https://www.npmjs.com/) which is bundled wi
             justifyContent: 'space-around',
           }}
         >
-          {w.map(d => <span>{d.day}</span>)}
+          {w.map(d => (
+            <span>{d.day}</span>
+          ))}
         </div>
       ))}
     </div>
@@ -109,6 +113,8 @@ This module is distributed via [npm](https://www.npmjs.com/) which is bundled wi
 
 [Basic usage](https://codesandbox.io/s/w242rok578)
 
+<iframe src="https://codesandbox.io/embed/w242rok578" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
 ## Types
 
 ### CalendarioDate
@@ -117,8 +123,9 @@ This module is distributed via [npm](https://www.npmjs.com/) which is bundled wi
 interface CalendarioDate {
   day: number;
   month: number;
-  year: number;
   siblingMonth: boolean;
+  value: string;
+  year: number;
 }
 ```
 
@@ -129,11 +136,11 @@ The `siblingMonth` prop is `true` when a day in the first or last week of the mo
 
 ```
 interface i18n {
-  weekDaysFull: String[];
-  weekDaysShort: String[];
-  weekDaysNarrow: String[];
   monthsFull: String[];
   monthsShort: String[];
+  weekDaysFull: String[];
+  weekDaysNarrow: String[];
+  weekDaysShort: String[];
 }
 ```
 
@@ -144,12 +151,12 @@ This is passed to the child of Calendario to display internationalized month and
 
 ```
 interface FullCalendar {
-  dates: Array<CalendarioDate[]>;
-  previousMonth: number;
   currentMonth: number;
-  nextMonth: number;
   currentYear: number;
+  dates: Array<CalendarioDate[]>;
   i18n: i18n;
+  nextMonth: number;
+  previousMonth: number;
 }
 ```
 
@@ -228,11 +235,11 @@ Each inner array represents one week of the current month.
 
 ```
 {
-  weekDaysFull: String[],
-  weekDaysShort: String[],
-  weekDaysNarrow: String[],
   monthsFull: String[],
   monthsShort: String[],
+  weekDaysFull: String[],
+  weekDaysNarrow: String[],
+  weekDaysShort: String[],
 }
 ```
 
